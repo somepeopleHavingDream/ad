@@ -14,7 +14,7 @@ import org.springframework.util.StringUtils;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateUserRequest {
+public class AdUserRequest {
     /**
      * 用户名
      */

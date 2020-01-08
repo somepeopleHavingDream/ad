@@ -3,7 +3,10 @@ package org.yangxin.ad.request;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * 推广计划
@@ -41,6 +44,11 @@ public class AdPlanRequest {
     private String endDate;
 
     /**
+     * ids
+     */
+    private List<Long> ids;
+
+    /**
      * 创建校验
      */
     public boolean createValidate() {
@@ -62,5 +70,12 @@ public class AdPlanRequest {
      */
     public boolean deleteValidate() {
         return id != null && userId != null;
+    }
+
+    /**
+     * 普通校验
+     */
+    public boolean listValidate() {
+        return userId != null && !CollectionUtils.isEmpty(ids);
     }
 }

@@ -8,7 +8,7 @@ import org.yangxin.ad.constant.Constants;
 import org.yangxin.ad.entity.AdUser;
 import org.yangxin.ad.exception.AdException;
 import org.yangxin.ad.repository.AdUserRepository;
-import org.yangxin.ad.request.CreateUserRequest;
+import org.yangxin.ad.request.AdUserRequest;
 import org.yangxin.ad.response.CreateUserResponse;
 import org.yangxin.ad.service.UserService;
 
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public CreateUserResponse createUser(CreateUserRequest request) throws AdException {
+    public CreateUserResponse createUser(AdUserRequest request) throws AdException {
         // 校验
         if (!request.validate()) {
             throw new AdException(Constants.ErrorMsg.REQUEST_PARAM_ERROR);
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
         // 查询数据库中是否有相同名称的用户
         AdUser oldUser = userRepository.findByUsername(request.getUsername());
         if (oldUser != null) {
-            throw new AdException(Constants.ErrorMsg.SAME_NAME_ERROR);
+            throw new AdException(Constants.ErrorMsg.SAME_NAME_USER_ERROR);
         }
 
         // 数据库操作

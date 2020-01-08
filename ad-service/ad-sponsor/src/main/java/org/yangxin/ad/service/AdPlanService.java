@@ -2,7 +2,6 @@ package org.yangxin.ad.service;
 
 import org.yangxin.ad.entity.AdPlan;
 import org.yangxin.ad.exception.AdException;
-import org.yangxin.ad.request.AdPlanGetRequest;
 import org.yangxin.ad.request.AdPlanRequest;
 import org.yangxin.ad.response.AdPlanResponse;
 
@@ -23,7 +22,7 @@ public interface AdPlanService {
     /**
      * 获取推广计划
      */
-    List<AdPlan> getAdPlanByIds(AdPlanGetRequest request) throws AdException;
+    List<AdPlan> listAdPlanByIds(AdPlanRequest request) throws AdException;
 
     /**
      * 更新推广计划

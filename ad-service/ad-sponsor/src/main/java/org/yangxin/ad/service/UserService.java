@@ -1,7 +1,7 @@
 package org.yangxin.ad.service;
 
 import org.yangxin.ad.exception.AdException;
-import org.yangxin.ad.request.CreateUserRequest;
+import org.yangxin.ad.request.AdUserRequest;
 import org.yangxin.ad.response.CreateUserResponse;
 
 /**
@@ -14,5 +14,5 @@ public interface UserService {
     /**
      * 创建用户
      */
-    CreateUserResponse createUser(CreateUserRequest request) throws AdException;
+    CreateUserResponse createUser(AdUserRequest request) throws AdException;
 }
