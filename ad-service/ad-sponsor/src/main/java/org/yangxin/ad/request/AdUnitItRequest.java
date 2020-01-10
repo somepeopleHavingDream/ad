@@ -16,12 +16,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdUnitItRequest {
-    private List<UnitIt> unitIts;
+    private List<UnitItRequest> unitItRequests;
 
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class UnitIt {
+    public static class UnitItRequest {
         /**
          * 推广单元Id
          */

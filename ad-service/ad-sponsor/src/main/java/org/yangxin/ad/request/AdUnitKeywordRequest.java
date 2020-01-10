@@ -16,12 +16,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdUnitKeywordRequest {
-    private List<UnitKeyword> unitKeywords;
+    private List<UnitKeywordRequest> unitKeywordRequests;
 
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class UnitKeyword {
+    public static class UnitKeywordRequest {
         /**
          * 单元id
          */

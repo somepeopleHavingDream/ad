@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdUnitDistrictRequest {
-    private List<UnitDistrict> unitDistricts;
+    private List<UnitDistrictRequest> unitDistrictRequests;
 
     /**
      * 地域
@@ -24,7 +24,7 @@ public class AdUnitDistrictRequest {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class UnitDistrict {
+    public static class UnitDistrictRequest {
         /**
          * 推广单元Id
          */

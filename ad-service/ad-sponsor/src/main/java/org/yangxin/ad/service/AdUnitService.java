@@ -1,6 +1,5 @@
 package org.yangxin.ad.service;
 
-import org.yangxin.ad.entity.unitcondition.AdUnitDistrict;
 import org.yangxin.ad.exception.AdException;
 import org.yangxin.ad.request.AdUnitDistrictRequest;
 import org.yangxin.ad.request.AdUnitItRequest;
