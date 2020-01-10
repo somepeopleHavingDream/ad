@@ -1,6 +1,7 @@
 package org.yangxin.ad.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "ad_creative")
+@Builder
 public class Creative {
     /**
      * 创意id
