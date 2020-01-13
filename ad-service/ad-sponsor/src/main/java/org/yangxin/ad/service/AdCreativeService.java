@@ -1,7 +1,7 @@
 package org.yangxin.ad.service;
 
 import org.yangxin.ad.request.AdCreativeRequest;
-import org.yangxin.ad.response.CreativeResponse;
+import org.yangxin.ad.response.AdCreativeResponse;
 
 /**
  * 创意
@@ -9,9 +9,9 @@ import org.yangxin.ad.response.CreativeResponse;
  * @author yangxin
  * 2020/01/10 17:43
  */
-public interface CreativeService {
+public interface AdCreativeService {
     /**
      * 创建创意
      */
-    CreativeResponse createCreative(AdCreativeRequest request);
+    AdCreativeResponse createCreative(AdCreativeRequest request);
 }

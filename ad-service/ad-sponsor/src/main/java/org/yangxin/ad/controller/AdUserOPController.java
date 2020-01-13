@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.yangxin.ad.exception.AdException;
 import org.yangxin.ad.request.AdUserRequest;
-import org.yangxin.ad.response.AdCreativeUnitResponse;
 import org.yangxin.ad.response.AdUserResponse;
-import org.yangxin.ad.service.UserService;
+import org.yangxin.ad.service.AdUserService;
 
 /**
  * 用户
@@ -21,11 +20,11 @@ import org.yangxin.ad.service.UserService;
 @Slf4j
 @RestController
 public class AdUserOPController {
-    private final UserService userService;
+    private final AdUserService adUserService;
 
     @Autowired
-    public AdUserOPController(UserService userService) {
-        this.userService = userService;
+    public AdUserOPController(AdUserService adUserService) {
+        this.adUserService = adUserService;
     }
 
     /**
@@ -34,6 +33,6 @@ public class AdUserOPController {
     @PostMapping("/create/user")
     public AdUserResponse createUser(@RequestBody AdUserRequest request) throws AdException {
         log.info("ad-sponsor: request: [{}]", JSON.toJSONString(request));
-        return userService.createUser(request);
+        return adUserService.createUser(request);
     }
 }

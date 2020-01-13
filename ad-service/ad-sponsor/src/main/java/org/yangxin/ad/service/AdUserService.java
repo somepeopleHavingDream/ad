@@ -10,7 +10,7 @@ import org.yangxin.ad.response.AdUserResponse;
  * @author yangxin
  * 2020/01/08 15:51
  */
-public interface UserService {
+public interface AdUserService {
     /**
      * 创建用户
      */

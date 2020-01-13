@@ -10,7 +10,7 @@ import org.yangxin.ad.exception.AdException;
 import org.yangxin.ad.repository.AdUserRepository;
 import org.yangxin.ad.request.AdUserRequest;
 import org.yangxin.ad.response.AdUserResponse;
-import org.yangxin.ad.service.UserService;
+import org.yangxin.ad.service.AdUserService;
 
 /**
  * 用户
@@ -20,11 +20,11 @@ import org.yangxin.ad.service.UserService;
  */
 @Service
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class AdUserServiceImpl implements AdUserService {
     private final AdUserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(AdUserRepository userRepository) {
+    public AdUserServiceImpl(AdUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

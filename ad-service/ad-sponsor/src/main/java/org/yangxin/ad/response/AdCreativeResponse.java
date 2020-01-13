@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreativeResponse {
+public class AdCreativeResponse {
     /**
      * id
      */
