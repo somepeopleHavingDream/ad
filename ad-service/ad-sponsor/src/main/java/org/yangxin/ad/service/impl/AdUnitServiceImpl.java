@@ -9,20 +9,17 @@ import org.yangxin.ad.entity.AdUnit;
 import org.yangxin.ad.entity.unitcondition.AdUnitDistrict;
 import org.yangxin.ad.entity.unitcondition.AdUnitIt;
 import org.yangxin.ad.entity.unitcondition.AdUnitKeyword;
+import org.yangxin.ad.entity.unitcondition.AdCreativeUnit;
 import org.yangxin.ad.exception.AdException;
+import org.yangxin.ad.repository.AdCreativeRepository;
 import org.yangxin.ad.repository.AdPlanRepository;
 import org.yangxin.ad.repository.AdUnitRepository;
 import org.yangxin.ad.repository.unitcondition.AdUnitDistrictRepository;
 import org.yangxin.ad.repository.unitcondition.AdUnitItRepository;
 import org.yangxin.ad.repository.unitcondition.AdUnitKeywordRepository;
-import org.yangxin.ad.request.AdUnitDistrictRequest;
-import org.yangxin.ad.request.AdUnitItRequest;
-import org.yangxin.ad.request.AdUnitKeywordRequest;
-import org.yangxin.ad.request.AdUnitRequest;
-import org.yangxin.ad.response.AdUnitDistrictResponse;
-import org.yangxin.ad.response.AdUnitItResponse;
-import org.yangxin.ad.response.AdUnitKeywordResponse;
-import org.yangxin.ad.response.AdUnitResponse;
+import org.yangxin.ad.repository.unitcondition.AdCreativeUnitRepository;
+import org.yangxin.ad.request.*;
+import org.yangxin.ad.response.*;
 import org.yangxin.ad.service.AdUnitService;
 
 import java.util.*;
@@ -38,15 +35,19 @@ import java.util.stream.Collectors;
 public class AdUnitServiceImpl implements AdUnitService {
     private final AdPlanRepository planRepository;
     private final AdUnitRepository unitRepository;
+    private final AdCreativeRepository creativeRepository;
+    private final AdCreativeUnitRepository creativeUnitRepository;
 
     private final AdUnitKeywordRepository unitKeywordRepository;
     private final AdUnitItRepository unitItRepository;
     private final AdUnitDistrictRepository unitDistrictRepository;
 
     @Autowired
-    public AdUnitServiceImpl(AdPlanRepository planRepository, AdUnitRepository unitRepository, AdUnitKeywordRepository unitKeywordRepository, AdUnitItRepository unitItRepository, AdUnitDistrictRepository unitDistrictRepository) {
+    public AdUnitServiceImpl(AdPlanRepository planRepository, AdUnitRepository unitRepository, AdCreativeRepository creativeRepository, AdCreativeUnitRepository CreativeUnitRepository, AdUnitKeywordRepository unitKeywordRepository, AdUnitItRepository unitItRepository, AdUnitDistrictRepository unitDistrictRepository) {
         this.planRepository = planRepository;
         this.unitRepository = unitRepository;
+        this.creativeRepository = creativeRepository;
+        this.creativeUnitRepository = CreativeUnitRepository;
         this.unitKeywordRepository = unitKeywordRepository;
         this.unitItRepository = unitItRepository;
         this.unitDistrictRepository = unitDistrictRepository;
@@ -156,6 +157,31 @@ public class AdUnitServiceImpl implements AdUnitService {
         return new AdUnitDistrictResponse(idList);
     }
 
+    @Override
+    public AdCreativeUnitResponse createCreativeUnit(AdCreativeUnitRequest request) throws AdException {
+        List<Long> unitIdList = request.getUnitItems().stream()
+                .map(AdCreativeUnitRequest.CreativeUnitItemRequest::getUnitId)
+                .collect(Collectors.toList());
+        List<Long> creativeIdList = request.getUnitItems().stream()
+                .map(AdCreativeUnitRequest.CreativeUnitItemRequest::getCreativeId)
+                .collect(Collectors.toList());
+
+        if (!(isRelatedUnitNotExist(unitIdList) && isRelatedUnitNotExist(creativeIdList))) {
+            throw new AdException(Constants.ErrorMsg.REQUEST_PARAM_ERROR);
+        }
+
+        List<AdCreativeUnit> creativeUnitList = new ArrayList<>();
+        for (AdCreativeUnitRequest.CreativeUnitItemRequest creativeUnitItemRequest : request.getUnitItems()) {
+            creativeUnitList.add(new AdCreativeUnit(creativeUnitItemRequest.getCreativeId(),
+                    creativeUnitItemRequest.getUnitId()));
+        }
+
+        List<Long> ids = creativeUnitRepository.saveAll(creativeUnitList).stream()
+                .map(AdCreativeUnit::getId)
+                .collect(Collectors.toList());
+        return new AdCreativeUnitResponse(ids);
+    }
+
     /**
      * 是否存在相关的推广单元
      */
@@ -165,5 +191,16 @@ public class AdUnitServiceImpl implements AdUnitService {
         }
 
         return unitRepository.findAllById(unitIds).size() != new HashSet<>(unitIds).size();
+    }
+
+    /**
+     * 是否存在相关的创意
+     */
+    private boolean isRelatedCreativeExist(List<Long> creativeIds) {
+        if (CollectionUtils.isEmpty(creativeIds)) {
+            return false;
+        }
+
+        return creativeRepository.findAllById(creativeIds).size() == new HashSet<>(creativeIds).size();
     }
 }

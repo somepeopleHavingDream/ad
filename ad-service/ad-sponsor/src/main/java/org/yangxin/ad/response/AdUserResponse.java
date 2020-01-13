@@ -15,7 +15,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateUserResponse {
+public class AdUserResponse {
     /**
      * 用户Id
      */

@@ -17,7 +17,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "creative_unit")
-public class CreativeUnit {
+public class AdCreativeUnit {
     /**
      * 创意-推广单元id
      */
@@ -40,7 +40,7 @@ public class CreativeUnit {
     @Column(name = "unit_id", nullable = false)
     private Long unitId;
 
-    public CreativeUnit(Long creativeId, Long unitId) {
+    public AdCreativeUnit(Long creativeId, Long unitId) {
         this.creativeId = creativeId;
         this.unitId = unitId;
     }

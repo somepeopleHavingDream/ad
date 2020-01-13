@@ -9,5 +9,5 @@ import org.yangxin.ad.entity.Creative;
  * @author yangxin
  * 2020/01/08 15:31
  */
-public interface CreativeRepository extends JpaRepository<Creative, Long> {
+public interface AdCreativeRepository extends JpaRepository<Creative, Long> {
 }

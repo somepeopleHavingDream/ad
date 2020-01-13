@@ -1,6 +1,6 @@
 package org.yangxin.ad.service;
 
-import org.yangxin.ad.request.CreativeRequest;
+import org.yangxin.ad.request.AdCreativeRequest;
 import org.yangxin.ad.response.CreativeResponse;
 
 /**
@@ -13,5 +13,5 @@ public interface CreativeService {
     /**
      * 创建创意
      */
-    CreativeResponse createCreative(CreativeRequest request);
+    CreativeResponse createCreative(AdCreativeRequest request);
 }

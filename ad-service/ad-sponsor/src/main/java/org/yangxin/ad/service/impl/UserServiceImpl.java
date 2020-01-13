@@ -9,7 +9,7 @@ import org.yangxin.ad.entity.AdUser;
 import org.yangxin.ad.exception.AdException;
 import org.yangxin.ad.repository.AdUserRepository;
 import org.yangxin.ad.request.AdUserRequest;
-import org.yangxin.ad.response.CreateUserResponse;
+import org.yangxin.ad.response.AdUserResponse;
 import org.yangxin.ad.service.UserService;
 
 /**
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public CreateUserResponse createUser(AdUserRequest request) throws AdException {
+    public AdUserResponse createUser(AdUserRequest request) throws AdException {
         // 校验
         if (!request.validate()) {
             throw new AdException(Constants.ErrorMsg.REQUEST_PARAM_ERROR);
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
         // 数据库操作
         AdUser newUser = userRepository.save(new AdUser(request.getUsername(), ""));
-        return new CreateUserResponse(newUser.getId(),
+        return new AdUserResponse(newUser.getId(),
                 newUser.getUsername(),
                 newUser.getToken(),
                 newUser.getCreateTime(),

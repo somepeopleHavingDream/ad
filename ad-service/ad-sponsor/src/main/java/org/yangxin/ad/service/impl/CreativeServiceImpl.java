@@ -3,8 +3,8 @@ package org.yangxin.ad.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.yangxin.ad.entity.Creative;
-import org.yangxin.ad.repository.CreativeRepository;
-import org.yangxin.ad.request.CreativeRequest;
+import org.yangxin.ad.repository.AdCreativeRepository;
+import org.yangxin.ad.request.AdCreativeRequest;
 import org.yangxin.ad.response.CreativeResponse;
 import org.yangxin.ad.service.CreativeService;
 
@@ -16,20 +16,20 @@ import org.yangxin.ad.service.CreativeService;
  */
 @Service
 public class CreativeServiceImpl implements CreativeService {
-    private final CreativeRepository creativeRepository;
+    private final AdCreativeRepository adCreativeRepository;
 
     @Autowired
-    public CreativeServiceImpl(CreativeRepository creativeRepository) {
-        this.creativeRepository = creativeRepository;
+    public CreativeServiceImpl(AdCreativeRepository adCreativeRepository) {
+        this.adCreativeRepository = adCreativeRepository;
     }
 
     @Override
-    public CreativeResponse createCreative(CreativeRequest request) {
+    public CreativeResponse createCreative(AdCreativeRequest request) {
         if (request == null) {
             return new CreativeResponse();
         }
 
-        Creative creative = creativeRepository.save(request.convertToEntity());
+        Creative creative = adCreativeRepository.save(request.convertToEntity());
         return new CreativeResponse(creative.getId(), creative.getName());
     }
 }

@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreativeRequest {
+public class AdCreativeRequest {
     /**
      * 创意名称
      */
