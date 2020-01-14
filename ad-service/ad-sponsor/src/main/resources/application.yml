@@ -21,6 +21,8 @@ spring:
       max-active: 4
       min-idle: 2
       initial-size: 2
+  main:
+    allow-bean-definition-overriding: true
 eureka:
   client:
     service-url:
