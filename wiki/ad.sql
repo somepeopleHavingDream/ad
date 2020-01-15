@@ -1,5 +1,7 @@
 create database ad;
 
+use ad;
+
 -- 用户表
 CREATE TABLE `ad_user` (
                            `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
