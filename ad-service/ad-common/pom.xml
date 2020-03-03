@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>ad-service</artifactId>
-        <groupId>org.yangxin</groupId>
+        <groupId>org.yangxin.ad</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -25,24 +25,43 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.31</version>
         </dependency>
+        <!-- jackson -->
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--            <artifactId>jackson-databind</artifactId>-->
+<!--            <version>2.10.2</version>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml -->
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.dataformat</groupId>-->
+<!--            <artifactId>jackson-dataformat-yaml</artifactId>-->
+<!--            <version>2.10.2</version>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-cbor -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-cbor</artifactId>
+            <version>2.10.2</version>
+        </dependency>
     </dependencies>
 
     <!--
         SpringBoot的Maven插件, 能够以Maven的方式为应用提供SpringBoot的支持，可以将
         SpringBoot应用打包为可执行的jar或war文件, 然后以通常的方式运行SpringBoot应用
      -->
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <!-- 加了这个后，ad-common就可以打包了 -->
-                <executions>
-                    <execution>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                &lt;!&ndash; 加了这个后，ad-common就可以打包了 &ndash;&gt;-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>none</phase>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
 </project>
