@@ -16,6 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommonResponseVO<T> implements Serializable {
+
     /**
      * 状态码
      */

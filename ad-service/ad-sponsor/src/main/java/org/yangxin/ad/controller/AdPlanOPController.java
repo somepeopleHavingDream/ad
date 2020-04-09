@@ -20,6 +20,7 @@ import java.util.List;
 @Slf4j
 @RestController
 public class AdPlanOPController {
+
     private final AdPlanService adPlanService;
 
     @Autowired
@@ -39,9 +40,9 @@ public class AdPlanOPController {
     /**
      * 根据Ids获取推广计划
      */
-    @PostMapping("/get/adPlan")
+    @PostMapping("/adPlan/list")
     public List<AdPlan> listAdPlanByIds(@RequestBody AdPlanRequest request) throws AdException {
-        log.info("ad-sponsor: request: [{}]", request);
+        log.info("request: [{}]", request);
         return adPlanService.listAdPlanByIds(request);
     }
 
