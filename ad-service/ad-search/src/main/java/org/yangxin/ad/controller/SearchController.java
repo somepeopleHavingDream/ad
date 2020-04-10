@@ -1,8 +1,11 @@
 package org.yangxin.ad.controller;
 
 import com.alibaba.fastjson.JSON;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +33,7 @@ public class SearchController {
     private final SponsorClient sponsorClient;
 
     @Autowired
-    public SearchController(RestTemplate restTemplate, SponsorClient sponsorClient) {
+    public SearchController(RestTemplate restTemplate, @Qualifier("sponsorClientHystrix") SponsorClient sponsorClient) {
         this.restTemplate = restTemplate;
         this.sponsorClient = sponsorClient;
     }
@@ -52,7 +55,8 @@ public class SearchController {
      * 通过feign获取广告投放计划
      */
     @IgnoreResponseAdvice
-    @PostMapping(value = "/adPlan/list", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/adPlan/list")
+//    @PostMapping(value = "/adPlan/list", produces = "application/json;charset=UTF-8")
     public CommonResponseVO<List<AdPlanResponse>> listAdPlans(@RequestBody AdPlanRequest request) {
         log.info("request: [{}]", JSON.toJSONString(request));
         return sponsorClient.listAdPlans(request);
