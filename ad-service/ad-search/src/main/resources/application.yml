@@ -15,7 +15,7 @@ spring:
     open-in-view: false
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/ad?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false
-    username: root
+    username: ENC(BQGsohp2tGtdi/wU5ck8wDyLGWQinHIZVV4DwG6sfV4aQMnsuYQUMvXvy0LieYzV)
     password: ENC(c/3cfPr8qlb69hAhaYYBth26ltfJ/CnfsKX1aGDatafRHESSeIQch2vDaOVWgy3D)
     driver-class-name: com.mysql.cj.jdbc.Driver
     tomcat:
