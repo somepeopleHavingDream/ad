@@ -55,8 +55,8 @@ public class SearchController {
      * 通过feign获取广告投放计划
      */
     @IgnoreResponseAdvice
-    @PostMapping(value = "/adPlan/list")
-//    @PostMapping(value = "/adPlan/list", produces = "application/json;charset=UTF-8")
+//    @PostMapping(value = "/adPlan/list")
+    @PostMapping(value = "/adPlan/list", produces = "application/json;charset=UTF-8")
     public CommonResponseVO<List<AdPlanResponse>> listAdPlans(@RequestBody AdPlanRequest request) {
         log.info("request: [{}]", JSON.toJSONString(request));
         return sponsorClient.listAdPlans(request);

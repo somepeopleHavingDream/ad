@@ -14,6 +14,13 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- jasypt -->
+        <!-- https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter -->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>3.0.2</version>
+        </dependency>
         <!-- 引入 Web 功能 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -14,6 +14,13 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- jasypt -->
+        <!-- https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter -->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>3.0.2</version>
+        </dependency>
         <!-- Hystrix 监控 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
