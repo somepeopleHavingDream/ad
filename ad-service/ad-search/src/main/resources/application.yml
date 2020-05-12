@@ -22,13 +22,14 @@ spring:
       max-active: 4
       min-idle: 2
       initial-size: 2
+
 eureka:
   client:
     service-url:
       defaultZone: http://server1:8000/eureka/
 
 feign:
-  httpclient:
+  hystrix:
     enabled: true
 
 management:

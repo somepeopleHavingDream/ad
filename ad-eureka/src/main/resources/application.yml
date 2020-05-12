@@ -5,6 +5,10 @@ spring:
 server:
   port: 8000
 
+ribbon:
+  eureka:
+    enabled: true
+
 eureka:
   instance:
     hostname: localhost

@@ -1,8 +1,6 @@
 package org.yangxin.ad.controller;
 
 import com.alibaba.fastjson.JSON;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -46,7 +44,7 @@ public class SearchController {
     @SuppressWarnings("all")
     public CommonResponseVO<List<AdPlanResponse>> listAdPlansByRibbon(@RequestBody AdPlanRequest request) {
         log.info("request: [{}]", JSON.toJSONString(request));
-        return restTemplate.postForEntity("http://eureka-client-ad-sponsor/ad-sponsor/get/adPlan",
+        return restTemplate.postForEntity("http://eureka-client-ad-sponsor/ad-sponsor/adPlan/list",
                 request, CommonResponseVO.class)
                 .getBody();
     }

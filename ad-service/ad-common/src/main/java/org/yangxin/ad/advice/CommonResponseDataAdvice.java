@@ -16,6 +16,7 @@ import org.yangxin.ad.vo.CommonResponseVO;
  * 2020/01/03 23:04
  */
 public class CommonResponseDataAdvice implements ResponseBodyAdvice<Object> {
+
     @Override
     @SuppressWarnings("all")
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
@@ -26,7 +27,6 @@ public class CommonResponseDataAdvice implements ResponseBodyAdvice<Object> {
     }
 
     @Override
-//    @Nullable
     @SuppressWarnings("all")
     public Object beforeBodyWrite(Object o,
                                   MethodParameter methodParameter,
