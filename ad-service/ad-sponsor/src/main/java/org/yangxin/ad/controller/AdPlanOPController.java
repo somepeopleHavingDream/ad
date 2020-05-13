@@ -40,16 +40,18 @@ public class AdPlanOPController {
     /**
      * 根据Ids获取推广计划
      */
-    @PostMapping("/adPlan/list")
+    @PostMapping(value = "/adPlan/list")
+//    @PostMapping(value = "/adPlan/list", produces = "application/json;charset=UTF-8")
     public List<AdPlan> listAdPlanByIds(@RequestBody AdPlanRequest request) throws AdException {
-        log.info("request: [{}]", request);
+        log.info("ad-sponsor request: [{}]", request);
+
         return adPlanService.listAdPlanByIds(request);
     }
 
     /**
      * 更新推广计划
      */
-    @PutMapping("/update/adPlan")
+    @PutMapping("/adPlan/update")
     public AdPlanResponse updateAdPlan(@RequestBody AdPlanRequest request) throws AdException {
         log.info("ad-sponsor: request: [{}]", request);
         return adPlanService.updateAdPlan(request);

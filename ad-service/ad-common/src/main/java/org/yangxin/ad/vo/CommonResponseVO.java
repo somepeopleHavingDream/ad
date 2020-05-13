@@ -17,6 +17,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class CommonResponseVO<T> implements Serializable {
 
+    private static final long serialVersionUID = -7034264656414705697L;
+
     /**
      * 状态码
      */

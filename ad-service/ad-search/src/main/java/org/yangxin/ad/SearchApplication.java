@@ -31,9 +31,12 @@ public class SearchApplication {
         SpringApplication.run(SearchApplication.class, args);
     }
 
-    @Bean
-    @LoadBalanced
-    RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
+//    /**
+//     * 这个可能是采用ribbon微服务调用方式所特有的代码
+//     */
+//    @Bean
+//    @LoadBalanced
+//    RestTemplate restTemplate() {
+//        return new RestTemplate();
+//    }
 }

@@ -5,9 +5,9 @@ spring:
 server:
   port: 8000
 
-ribbon:
-  eureka:
-    enabled: true
+#ribbon:
+#  eureka:
+#    enabled: true
 
 eureka:
   instance:

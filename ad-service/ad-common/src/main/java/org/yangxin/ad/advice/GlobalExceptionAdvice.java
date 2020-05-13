@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
+
     /**
      * 处理异常
      */

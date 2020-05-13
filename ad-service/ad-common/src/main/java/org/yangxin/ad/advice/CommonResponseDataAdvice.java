@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import org.yangxin.ad.annotation.IgnoreResponseAdvice;
 import org.yangxin.ad.vo.CommonResponseVO;
@@ -15,6 +16,7 @@ import org.yangxin.ad.vo.CommonResponseVO;
  * @author yangxin
  * 2020/01/03 23:04
  */
+@RestControllerAdvice
 public class CommonResponseDataAdvice implements ResponseBodyAdvice<Object> {
 
     @Override

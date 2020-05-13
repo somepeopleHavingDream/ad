@@ -1,10 +1,10 @@
 server:
   port: 9000
+
 spring:
   application:
     name: ad-gateway
-#  main:
-#    allow-bean-definition-overriding: true
+
 eureka:
   client:
     service-url:
@@ -21,3 +21,13 @@ zuul:
       path: /ad-search/**
       serviceId: eureka-client-ad-search
       strip-prefix: false
+#  host:
+#    max-total-connections: 10000
+#    max-per-route-connections: 10000
+#    connect-timeout-millis: 10000
+#  semaphore:
+#    max-semaphores: 200
+
+#ribbon:
+#  ReadTimeout: 10000
+#  ConnectTime: 10000

@@ -13,10 +13,11 @@ import java.util.Date;
  * 2020/01/08 16:18
  */
 public class CommonUtils {
+
     /**
      * 解析格式
      */
-    private static String[] parsePatterns = {
+    private static final String[] parsePatterns = {
             "yyyy-MM-dd", "yyyy/MM/dd", "yyyy.MM.dd"
     };
 
