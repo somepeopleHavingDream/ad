@@ -9,12 +9,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.yangxin.ad.Application;
 import org.yangxin.ad.constant.CommonStatusEnum;
-import org.yangxin.ad.dump.table.AdCreativeTable;
-import org.yangxin.ad.dump.table.AdPlanTable;
-import org.yangxin.ad.dump.table.AdUnitTable;
+import org.yangxin.ad.dump.DumpConstant;
+import org.yangxin.ad.dump.table.*;
 import org.yangxin.ad.entity.AdPlan;
 import org.yangxin.ad.entity.AdUnit;
 import org.yangxin.ad.entity.Creative;
+import org.yangxin.ad.entity.unitcondition.AdCreativeUnit;
+import org.yangxin.ad.entity.unitcondition.AdUnitDistrict;
+import org.yangxin.ad.entity.unitcondition.AdUnitIt;
+import org.yangxin.ad.entity.unitcondition.AdUnitKeyword;
 import org.yangxin.ad.repository.AdCreativeRepository;
 import org.yangxin.ad.repository.AdPlanRepository;
 import org.yangxin.ad.repository.AdUnitRepository;
@@ -56,6 +59,16 @@ public class DumpDataService {
     private AdUnitItRepository adUnitItRepository;
     @Autowired
     private AdUnitKeywordRepository adUnitKeywordRepository;
+
+    public void dumpAdTableData() {
+        dumpAdPlanTable(String.format("%s%s", DumpConstant.DATA_ROOT_DIR, DumpConstant.AD_PLAN));
+        dumpAdPlanTable(String.format("%s%s", DumpConstant.DATA_ROOT_DIR, DumpConstant.AD_UNIT));
+        dumpAdPlanTable(String.format("%s%s", DumpConstant.DATA_ROOT_DIR, DumpConstant.AD_CREATIVE));
+        dumpAdPlanTable(String.format("%s%s", DumpConstant.DATA_ROOT_DIR, DumpConstant.AD_CREATIVE_UNIT));
+        dumpAdPlanTable(String.format("%s%s", DumpConstant.DATA_ROOT_DIR, DumpConstant.AD_UNIT_DISTRICT));
+        dumpAdPlanTable(String.format("%s%s", DumpConstant.DATA_ROOT_DIR, DumpConstant.AD_UNIT_IT));
+        dumpAdPlanTable(String.format("%s%s", DumpConstant.DATA_ROOT_DIR, DumpConstant.AD_UNIT_KEYWORD));
+    }
 
     private void dumpAdPlanTable(String fileName) {
         List<AdPlan> adPlanList = adPlanRepository.findAllByPlanStatus(CommonStatusEnum.VALID.getStatus());
@@ -116,7 +129,93 @@ public class DumpDataService {
                 bufferedWriter.newLine();
             }
         } catch (IOException e) {
-            log.error("dumpAdPlanTable error", e);
+            log.error("dumpAdCreativeTable error", e);
+        }
+    }
+
+    private void dumpAdCreativeUnitTable(String fileName) {
+        List<AdCreativeUnit> adCreativeUnitList = adCreativeUnitRepository.findAll();
+        if (CollectionUtils.isEmpty(adCreativeUnitList)) {
+            return;
+        }
+
+        List<AdCreativeUnitTable> adCreativeUnitTableList = new ArrayList<>();
+        adCreativeUnitList.forEach(adCreativeUnit
+                -> adCreativeUnitTableList.add(new AdCreativeUnitTable(adCreativeUnit.getCreativeId(),
+                adCreativeUnit.getUnitId())));
+
+        Path path = Paths.get(fileName);
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
+            for (AdCreativeUnitTable adCreativeUnitTable : adCreativeUnitTableList) {
+                bufferedWriter.write(JSON.toJSONString(adCreativeUnitTable));
+                bufferedWriter.newLine();
+            }
+        } catch (IOException e) {
+            log.error("dumpAdCreativeUnitTable error", e);
+        }
+    }
+
+    private void dumpAdUnitDistrictTable(String fileName) {
+        List<AdUnitDistrict> adUnitDistrictList = adUnitDistrictRepository.findAll();
+        if (CollectionUtils.isEmpty(adUnitDistrictList)) {
+            return;
+        }
+
+        List<AdUnitDistrictTable> adUnitDistrictTableList = new ArrayList<>();
+        adUnitDistrictList.forEach(adUnitDistrict -> adUnitDistrictTableList.add(new AdUnitDistrictTable(adUnitDistrict.getUnitId(),
+                adUnitDistrict.getProvince(), adUnitDistrict.getCity())));
+
+        Path path = Paths.get(fileName);
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
+            for (AdUnitDistrictTable adUnitDistrictTable : adUnitDistrictTableList) {
+                bufferedWriter.write(JSON.toJSONString(adUnitDistrictTable));
+                bufferedWriter.newLine();
+            }
+        } catch (IOException e) {
+            log.error("dumpAdUnitDistrictTable error", e);
+        }
+    }
+
+    private void dumpAdUnitItTable(String fileName) {
+        List<AdUnitIt> adUnitItList = adUnitItRepository.findAll();
+        if (CollectionUtils.isEmpty(adUnitItList)) {
+            return;
+        }
+
+        List<AdUnitItTable> adUnitItTableList = new ArrayList<>();
+        adUnitItList.forEach(adUnitIt -> adUnitItTableList.add(new AdUnitItTable(adUnitIt.getUnitId(),
+                adUnitIt.getItTag())));
+
+        Path path = Paths.get(fileName);
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
+            for (AdUnitItTable adUnitItTable : adUnitItTableList) {
+                bufferedWriter.write(JSON.toJSONString(adUnitItTable));
+                bufferedWriter.newLine();
+            }
+        } catch (IOException e) {
+            log.error("dumpAdUnitItTable error", e);
+        }
+    }
+
+    private void dumpAdUnitKeywordTable(String fileName) {
+        List<AdUnitKeyword> adUnitKeywordList = adUnitKeywordRepository.findAll();
+        if (CollectionUtils.isEmpty(adUnitKeywordList)) {
+            return;
+        }
+
+        List<AdUnitKeywordTable> adUnitKeywordTableList = new ArrayList<>();
+        adUnitKeywordList.forEach(adUnitKeyword
+                -> adUnitKeywordTableList.add(new AdUnitKeywordTable(adUnitKeyword.getUnitId(),
+                adUnitKeyword.getKeyword())));
+
+        Path path = Paths.get(fileName);
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
+            for (AdUnitKeywordTable adUnitKeywordTable : adUnitKeywordTableList) {
+                bufferedWriter.write(JSON.toJSONString(adUnitKeywordTable));
+                bufferedWriter.newLine();
+            }
+        } catch (IOException e) {
+            log.error("dumpAdUnitKeywordTable error", e);
         }
     }
 }
