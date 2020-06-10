@@ -3,6 +3,7 @@ package org.yangxin.ad.service;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -60,6 +61,7 @@ public class DumpDataService {
     @Autowired
     private AdUnitKeywordRepository adUnitKeywordRepository;
 
+    @Test
     public void dumpAdTableData() {
         dumpAdPlanTable(String.format("%s%s", DumpConstant.DATA_ROOT_DIR, DumpConstant.AD_PLAN));
         dumpAdUnitTable(String.format("%s%s", DumpConstant.DATA_ROOT_DIR, DumpConstant.AD_UNIT));
@@ -75,12 +77,15 @@ public class DumpDataService {
         if (CollectionUtils.isEmpty(adPlanList)) {
             return;
         }
+        log.info("adPlanList.size: [{}]", adPlanList.size());
 
         List<AdPlanTable> adPlanTableList = new ArrayList<>();
         adPlanList.forEach(adPlan -> adPlanTableList.add(new AdPlanTable(adPlan.getId(),
                 adPlan.getUserId(), adPlan.getPlanStatus(), adPlan.getStartDate(), adPlan.getEndDate())));
 
         Path path = Paths.get(fileName);
+        log.info("path: [{}]", path);
+
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
             for (AdPlanTable adPlanTable : adPlanTableList) {
                 bufferedWriter.write(JSON.toJSONString(adPlanTable));
@@ -95,6 +100,7 @@ public class DumpDataService {
         if (CollectionUtils.isEmpty(adUnitList)) {
             return;
         }
+        log.info("adUnitList.size: [{}]", adUnitList.size());
 
         List<AdUnitTable> adUnitTableList = new ArrayList<>();
         adUnitList.forEach(adUnit -> adUnitTableList.add(new AdUnitTable(adUnit.getId(),
@@ -116,6 +122,7 @@ public class DumpDataService {
         if (CollectionUtils.isEmpty(creativeList)) {
             return;
         }
+        log.info("creativeList.size: [{}]", creativeList.size());
 
         List<AdCreativeTable> adCreativeTableList = new ArrayList<>();
         creativeList.forEach(creative -> adCreativeTableList.add(new AdCreativeTable(creative.getId(),
@@ -138,6 +145,7 @@ public class DumpDataService {
         if (CollectionUtils.isEmpty(adCreativeUnitList)) {
             return;
         }
+        log.info("adCreativeUnitList.size: [{}]", adCreativeUnitList.size());
 
         List<AdCreativeUnitTable> adCreativeUnitTableList = new ArrayList<>();
         adCreativeUnitList.forEach(adCreativeUnit
@@ -160,6 +168,7 @@ public class DumpDataService {
         if (CollectionUtils.isEmpty(adUnitDistrictList)) {
             return;
         }
+        log.info("adUnitDistrictList.size: [{}]", adUnitDistrictList.size());
 
         List<AdUnitDistrictTable> adUnitDistrictTableList = new ArrayList<>();
         adUnitDistrictList.forEach(adUnitDistrict -> adUnitDistrictTableList.add(new AdUnitDistrictTable(adUnitDistrict.getUnitId(),
@@ -181,6 +190,7 @@ public class DumpDataService {
         if (CollectionUtils.isEmpty(adUnitItList)) {
             return;
         }
+        log.info("adUnitItList.size: [{}]", adUnitItList.size());
 
         List<AdUnitItTable> adUnitItTableList = new ArrayList<>();
         adUnitItList.forEach(adUnitIt -> adUnitItTableList.add(new AdUnitItTable(adUnitIt.getUnitId(),
@@ -202,6 +212,7 @@ public class DumpDataService {
         if (CollectionUtils.isEmpty(adUnitKeywordList)) {
             return;
         }
+        log.info("adUnitKeywordList.size: [{}]", adUnitKeywordList.size());
 
         List<AdUnitKeywordTable> adUnitKeywordTableList = new ArrayList<>();
         adUnitKeywordList.forEach(adUnitKeyword
