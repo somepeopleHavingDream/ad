@@ -1,7 +1,14 @@
 package org.yangxin.ad.handler;
 
 import lombok.extern.slf4j.Slf4j;
+import org.yangxin.ad.dump.table.AdCreativeTable;
+import org.yangxin.ad.dump.table.AdPlanTable;
+import org.yangxin.ad.index.DataTable;
 import org.yangxin.ad.index.IndexAware;
+import org.yangxin.ad.index.adplan.AdPlanIndex;
+import org.yangxin.ad.index.adplan.AdPlanObject;
+import org.yangxin.ad.index.creative.CreativeIndex;
+import org.yangxin.ad.index.creative.CreativeObject;
 import org.yangxin.ad.mysql.constant.OpType;
 
 /**
@@ -13,6 +20,27 @@ import org.yangxin.ad.mysql.constant.OpType;
  */
 @Slf4j
 public class AdLevelDataHandler {
+
+    public static void handleLevel2(AdPlanTable adPlanTable, OpType opType) {
+        AdPlanObject adPlanObject = new AdPlanObject(adPlanTable.getId(),
+                adPlanTable.getUserId(),
+                adPlanTable.getPlanStatus(),
+                adPlanTable.getStartDate(),
+                adPlanTable.getEndDate());
+        handleBinlogEvent(DataTable.of(AdPlanIndex.class), adPlanObject.getPlanId(), adPlanObject, opType);
+    }
+
+    public static void handleLevel2(AdCreativeTable adCreativeTable, OpType opType) {
+        CreativeObject creativeObject = new CreativeObject(adCreativeTable.getAdId(),
+                adCreativeTable.getName(),
+                adCreativeTable.getType(),
+                adCreativeTable.getMaterialType(),
+                adCreativeTable.getHeight(),
+                adCreativeTable.getWidth(),
+                adCreativeTable.getAuditStatus(),
+                adCreativeTable.getAdUrl());
+        handleBinlogEvent(DataTable.of(CreativeIndex.class), creativeObject.getAdId(), creativeObject, opType);
+    }
 
     private static <K, V> void handleBinlogEvent(IndexAware<K, V> index, K key, V value, OpType opType) {
         switch (opType) {
