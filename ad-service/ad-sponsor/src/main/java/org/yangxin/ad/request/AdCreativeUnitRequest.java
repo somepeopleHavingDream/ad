@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdCreativeUnitRequest {
+
     private List<CreativeUnitItemRequest> unitItems;
 
     @Data

@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdUnitRequest {
+
     /**
      * 推广计划Id
      */

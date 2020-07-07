@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdUnitKeywordRequest {
+
     private List<UnitKeywordRequest> unitKeywordRequests;
 
     @Data

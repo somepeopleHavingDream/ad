@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdUnitDistrictRequest {
+
     private List<UnitDistrictRequest> unitDistrictRequests;
 
     /**

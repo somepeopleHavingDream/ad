@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdUnitItRequest {
+
     private List<UnitItRequest> unitItRequests;
 
     @Data
