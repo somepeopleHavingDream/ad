@@ -25,7 +25,7 @@ public class AggregationListener implements BinaryLogClient.EventListener {
     private String dbName;
     private String tableName;
 
-    private Map<String, Listener> listenerMap = new HashMap<>();
+    private final Map<String, Listener> listenerMap = new HashMap<>();
     private final TemplateHolder templateHolder;
 
     @Autowired
