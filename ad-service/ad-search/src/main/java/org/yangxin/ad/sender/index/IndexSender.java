@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.yangxin.ad.dump.table.AdCreativeTable;
+import org.yangxin.ad.dump.table.AdCreativeUnitTable;
 import org.yangxin.ad.dump.table.AdPlanTable;
+import org.yangxin.ad.dump.table.AdUnitTable;
 import org.yangxin.ad.handler.AdLevelDataHandler;
 import org.yangxin.ad.index.DataLevel;
 import org.yangxin.ad.mysql.constant.Constant;
@@ -31,11 +33,60 @@ public class IndexSender implements Sender {
         if (Objects.equals(DataLevel.LEVEL2.getLevel(), level)) {
             level2RowData(rowData);
         } else if (Objects.equals(DataLevel.LEVEL3.getLevel(), level)) {
-            // todo
+            level3RowData(rowData);
         } else if (Objects.equals(DataLevel.LEVEL4.getLevel(), level)) {
             // todo
         } else {
             log.error("MySQLRowData ERROR: [{}]", JSON.toJSONString(rowData));
+        }
+    }
+
+    private void level3RowData(MySQLRowData rowData) {
+        if (Objects.equals(rowData.getTableName(), Constant.AD_UNIT_TABLE_INFO.TABLE_NAME)) {
+            List<AdUnitTable> unitTableList = new ArrayList<>();
+            for (Map<String, String> fieldValueMap : rowData.getFieldValueMap()) {
+                AdUnitTable unitTable = new AdUnitTable();
+                fieldValueMap.forEach((k, v) -> {
+                    switch (k) {
+                        case Constant.AD_UNIT_TABLE_INFO.COLUMN_ID:
+                            unitTable.setUnitId(Long.valueOf(v));
+                            break;
+                        case Constant.AD_UNIT_TABLE_INFO.COLUMN_UNIT_STATUS:
+                            unitTable.setUnitStatus(Integer.valueOf(v));
+                            break;
+                        case Constant.AD_UNIT_TABLE_INFO.COLUMN_POSITION_TYPE:
+                            unitTable.setPositionType(Integer.valueOf(v));
+                            break;
+                        case Constant.AD_UNIT_TABLE_INFO.COLUMN_PLAN_ID:
+                            unitTable.setPlanId(Long.valueOf(v));
+                            break;
+                    }
+                });
+
+                unitTableList.add(unitTable);
+            }
+
+            unitTableList.forEach(u -> AdLevelDataHandler.handleLevel3(u, rowData.getOpType()));
+        } else if (Objects.equals(rowData.getTableName(), Constant.AD_CREATIVE_UNIT_TABLE_INFO.TABLE_NAME)) {
+            List<AdCreativeUnitTable> creativeUnitTableList = new ArrayList<>();
+
+            for (Map<String, String> fieldValueMap : rowData.getFieldValueMap()) {
+                AdCreativeUnitTable creativeUnitTable = new AdCreativeUnitTable();
+                fieldValueMap.forEach((k, v) -> {
+                    switch (k) {
+                        case Constant.AD_CREATIVE_UNIT_TABLE_INFO.COLUMN_CREATIVE_ID:
+                            creativeUnitTable.setAdId(Long.valueOf(v));
+                            break;
+                        case Constant.AD_CREATIVE_UNIT_TABLE_INFO.COLUMN_UNIT_ID:
+                            creativeUnitTable.setUnitId(Long.valueOf(v));
+                            break;
+                    }
+                });
+
+                creativeUnitTableList.add(creativeUnitTable);
+            }
+
+            creativeUnitTableList.forEach(u -> AdLevelDataHandler.handleLevel3(u, rowData.getOpType()));
         }
     }
 
