@@ -1,11 +1,17 @@
 package org.yangxin.ad.search.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.sun.corba.se.impl.orbutil.concurrent.Sync;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
+import org.yangxin.ad.index.CommonStatus;
 import org.yangxin.ad.index.DataTable;
 import org.yangxin.ad.index.adunit.AdUnitIndex;
+import org.yangxin.ad.index.adunit.AdUnitObject;
+import org.yangxin.ad.index.creative.CreativeIndex;
+import org.yangxin.ad.index.creative.CreativeObject;
+import org.yangxin.ad.index.creativeunit.CreativeUnitIndex;
 import org.yangxin.ad.index.district.UnitDistrictIndex;
 import org.yangxin.ad.index.interest.UnitItIndex;
 import org.yangxin.ad.index.keyword.UnitKeywordIndex;
@@ -61,9 +67,33 @@ public class SearchImpl implements Search {
             } else {
                 targetUnitIdSet = getOrRelationUnitIds(adUnitIdSet, keywordFeature, districtFeature, itFeature);
             }
+
+            List<AdUnitObject> unitObjects = DataTable.of(AdUnitIndex.class)
+                    .fetch(targetUnitIdSet);
+
+            filterAdUnitAndPlanStatus(unitObjects, CommonStatus.VALID);
+
+            List<Long> adIds = DataTable.of(CreativeUnitIndex.class)
+                    .selectAds(unitObjects);
+            List<CreativeObject> creatives = DataTable.of(CreativeIndex.class).fetch(adIds);
+
+            // 通过AdSlot实现对CreativeObject的过滤
+            filterCreativeByAdSlot(creatives, adSlot.getWidth(), adSlot.getHeight(), adSlot.getType());
+            adSlot2Ads.put(adSlot.getAdSlotCode(), buildCreativeResponse(creatives));
         }
 
-        return null;
+        log.info("fetchAds: [{}]-[{}]", JSON.toJSONString(request), JSON.toJSON(response));
+
+        return response;
+    }
+
+    private void filterAdUnitAndPlanStatus(List<AdUnitObject> unitObjects, CommonStatus status) {
+        if (CollectionUtils.isEmpty(unitObjects)) {
+            return;
+        }
+
+        CollectionUtils.filter(unitObjects, object -> Objects.equals(object.getUnitStatus(), status.getStatus())
+            && Objects.equals(object.getAdPlanObject().getPlanStatus(), status.getStatus()));
     }
 
     private Set<Long> getOrRelationUnitIds(Set<Long> adUnitIdSet,
@@ -116,5 +146,29 @@ public class SearchImpl implements Search {
             CollectionUtils.filter(adUnitIds, adUnitId -> DataTable.of(UnitItIndex.class)
                     .match(adUnitId, itFeature.getIts()));
         }
+    }
+
+    private void filterCreativeByAdSlot(List<CreativeObject> creatives,
+                                        Integer width,
+                                        Integer height,
+                                        List<Integer> type) {
+        if (CollectionUtils.isEmpty(creatives)) {
+            return;
+        }
+
+        CollectionUtils.filter(creatives, creative -> Objects.equals(creative.getAuditStatus(), CommonStatus.VALID.getStatus())
+            && Objects.equals(creative.getWidth(), width)
+            && Objects.equals(creative.getHeight(), height)
+            && type.contains(creative.getType()));
+    }
+
+    private List<SearchResponse.Creative> buildCreativeResponse(List<CreativeObject> creatives) {
+        if (CollectionUtils.isEmpty(creatives)) {
+            return Collections.emptyList();
+        }
+
+        CreativeObject randomObject = creatives.get(Math.abs(new Random().nextInt()) % creatives.size());
+
+        return Collections.singletonList(SearchResponse.convert(randomObject));
     }
 }
