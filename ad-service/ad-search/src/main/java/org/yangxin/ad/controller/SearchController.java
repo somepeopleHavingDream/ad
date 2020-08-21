@@ -11,6 +11,9 @@ import org.yangxin.ad.annotation.IgnoreResponseAdvice;
 import org.yangxin.ad.client.SponsorClient;
 import org.yangxin.ad.request.AdPlanRequest;
 import org.yangxin.ad.response.AdPlanResponse;
+import org.yangxin.ad.search.Search;
+import org.yangxin.ad.search.vo.SearchRequest;
+import org.yangxin.ad.search.vo.SearchResponse;
 import org.yangxin.ad.vo.CommonResponseVO;
 
 import java.util.List;
@@ -28,13 +31,15 @@ public class SearchController {
 //    private final RestTemplate restTemplate;
 
     private final SponsorClient sponsorClient;
+    private final Search search;
 
     @Autowired
 //    public SearchController(SponsorClient sponsorClient) {
-    public SearchController(@Qualifier("sponsorClientHystrix") SponsorClient sponsorClient) {
+    public SearchController(@Qualifier("sponsorClientHystrix") SponsorClient sponsorClient, Search search) {
 //    public SearchController(RestTemplate restTemplate, @Qualifier("sponsorClientHystrix") SponsorClient sponsorClient) {
 //        this.restTemplate = restTemplate;
         this.sponsorClient = sponsorClient;
+        this.search = search;
     }
 
 //    /**
@@ -61,5 +66,11 @@ public class SearchController {
         log.info("ad-search request: [{}]", JSON.toJSONString(request));
 
         return sponsorClient.listAdPlans(request);
+    }
+
+    @PostMapping("/fetchAds")
+    public SearchResponse fetchAds(@RequestBody SearchRequest request) {
+        log.info("ad-search: fetchAds -> [{}]", JSON.toJSONString(request));
+        return search.fetchAds(request);
     }
 }

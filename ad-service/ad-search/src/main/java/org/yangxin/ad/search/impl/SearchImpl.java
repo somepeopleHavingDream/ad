@@ -1,7 +1,6 @@
 package org.yangxin.ad.search.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.sun.corba.se.impl.orbutil.concurrent.Sync;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,6 @@ import org.yangxin.ad.search.vo.feature.ITFeature;
 import org.yangxin.ad.search.vo.feature.KeywordFeature;
 import org.yangxin.ad.search.vo.media.AdSlot;
 
-import java.net.ServerSocket;
 import java.util.*;
 
 /**
