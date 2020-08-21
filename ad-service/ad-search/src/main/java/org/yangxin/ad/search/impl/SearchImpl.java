@@ -1,9 +1,14 @@
 package org.yangxin.ad.search.impl;
 
+import com.sun.corba.se.impl.orbutil.concurrent.Sync;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.yangxin.ad.index.DataTable;
 import org.yangxin.ad.index.adunit.AdUnitIndex;
+import org.yangxin.ad.index.district.UnitDistrictIndex;
+import org.yangxin.ad.index.interest.UnitItIndex;
+import org.yangxin.ad.index.keyword.UnitKeywordIndex;
 import org.yangxin.ad.search.Search;
 import org.yangxin.ad.search.vo.SearchRequest;
 import org.yangxin.ad.search.vo.SearchResponse;
@@ -13,9 +18,8 @@ import org.yangxin.ad.search.vo.feature.ITFeature;
 import org.yangxin.ad.search.vo.feature.KeywordFeature;
 import org.yangxin.ad.search.vo.media.AdSlot;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.net.ServerSocket;
+import java.util.*;
 
 /**
  * @author yangxin
@@ -47,8 +51,70 @@ public class SearchImpl implements Search {
 
             // 根据流量类型获取初始AdUnit
             Set<Long> adUnitIdSet = DataTable.of(AdUnitIndex.class).match(adSlot.getPositionType());
+
+            if (relation == FeatureRelationEnum.AND) {
+                filterKeywordFeature(adUnitIdSet, keywordFeature);
+                filterDistrictFeature(adUnitIdSet, districtFeature);
+                filterITTagFeature(adUnitIdSet, itFeature);
+
+                targetUnitIdSet = adUnitIdSet;
+            } else {
+
+            }
         }
 
         return null;
+    }
+
+    private Set<Long> getOrRelationUnitIds(Set<Long> adUnitIdSet,
+                                           KeywordFeature keywordFeature,
+                                           DistrictFeature districtFeature,
+                                           ITFeature itFeature) {
+        if (CollectionUtils.isEmpty(adUnitIdSet)) {
+            return Collections.emptySet();
+        }
+
+        Set<Long> keywordUnitIdSet = new HashSet<>(adUnitIdSet);
+        Set<Long> districtUnitIdSet = new HashSet<>(adUnitIdSet);
+        Set<Long> itUnitIdSet = new HashSet<>(adUnitIdSet);
+
+        filterKeywordFeature(keywordUnitIdSet, keywordFeature);
+        filterDistrictFeature(districtUnitIdSet, districtFeature);
+        filterITTagFeature(itUnitIdSet, itFeature);
+
+        return new HashSet<>(CollectionUtils.union(CollectionUtils.union(keywordUnitIdSet, districtUnitIdSet), itUnitIdSet));
+    }
+
+    private void filterKeywordFeature(Collection<Long> adUnitIds, KeywordFeature keywordFeature) {
+        if (CollectionUtils.isEmpty(adUnitIds)) {
+            return;
+        }
+
+        if (CollectionUtils.isNotEmpty(keywordFeature.getKeywords())) {
+            CollectionUtils.filter(adUnitIds, adUnitId -> DataTable.of(UnitKeywordIndex.class)
+                    .match(adUnitId, keywordFeature.getKeywords()));
+        }
+    }
+
+    private void filterDistrictFeature(Collection<Long> adUnitIds, DistrictFeature districtFeature) {
+        if (CollectionUtils.isEmpty(adUnitIds)) {
+            return;
+        }
+
+        if (CollectionUtils.isNotEmpty(districtFeature.getDistricts())) {
+            CollectionUtils.filter(adUnitIds, adUnitId -> DataTable.of(UnitDistrictIndex.class)
+                    .match(adUnitId, districtFeature.getDistricts()));
+        }
+    }
+
+    private void filterITTagFeature(Collection<Long> adUnitIds, ITFeature itFeature) {
+        if (CollectionUtils.isEmpty(adUnitIds)) {
+            return;
+        }
+
+        if (CollectionUtils.isNotEmpty(itFeature.getIts())) {
+            CollectionUtils.filter(adUnitIds, adUnitId -> DataTable.of(UnitItIndex.class)
+                    .match(adUnitId, itFeature.getIts()));
+        }
     }
 }
