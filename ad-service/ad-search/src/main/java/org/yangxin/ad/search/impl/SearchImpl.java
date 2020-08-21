@@ -59,7 +59,7 @@ public class SearchImpl implements Search {
 
                 targetUnitIdSet = adUnitIdSet;
             } else {
-
+                targetUnitIdSet = getOrRelationUnitIds(adUnitIdSet, keywordFeature, districtFeature, itFeature);
             }
         }
 
