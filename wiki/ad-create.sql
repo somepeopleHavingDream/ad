@@ -1,4 +1,5 @@
-create database ad;
+drop database ad;
+create database ad character set utf8;
 
 use ad;
 
