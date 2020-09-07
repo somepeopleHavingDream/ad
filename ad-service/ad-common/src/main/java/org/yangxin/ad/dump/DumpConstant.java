@@ -6,7 +6,7 @@ package org.yangxin.ad.dump;
  */
 public class DumpConstant {
 
-    public static final String DATA_ROOT_DIR = "mysql-data-";
+    public static final String DATA_ROOT_DIR = "/home/yangxin/Downloads/ad-mysql-data/";
 
     // 各个表数据的存储文件名
 

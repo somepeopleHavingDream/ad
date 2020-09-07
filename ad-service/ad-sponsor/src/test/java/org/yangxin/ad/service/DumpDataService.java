@@ -63,38 +63,64 @@ public class DumpDataService {
 
     @Test
     public void dumpAdTableData() {
+        // ad_plan
         dumpAdPlanTable(String.format("%s%s", DumpConstant.DATA_ROOT_DIR, DumpConstant.AD_PLAN));
+        // ad_unit
         dumpAdUnitTable(String.format("%s%s", DumpConstant.DATA_ROOT_DIR, DumpConstant.AD_UNIT));
+        // ad_creative
         dumpAdCreativeTable(String.format("%s%s", DumpConstant.DATA_ROOT_DIR, DumpConstant.AD_CREATIVE));
+        // creative_unit
         dumpAdCreativeUnitTable(String.format("%s%s", DumpConstant.DATA_ROOT_DIR, DumpConstant.AD_CREATIVE_UNIT));
+        // ad_unit_district
         dumpAdUnitDistrictTable(String.format("%s%s", DumpConstant.DATA_ROOT_DIR, DumpConstant.AD_UNIT_DISTRICT));
+        // ad_unit_it
         dumpAdUnitItTable(String.format("%s%s", DumpConstant.DATA_ROOT_DIR, DumpConstant.AD_UNIT_IT));
+        // ad_unit_keyword
         dumpAdUnitKeywordTable(String.format("%s%s", DumpConstant.DATA_ROOT_DIR, DumpConstant.AD_UNIT_KEYWORD));
     }
 
+    /**
+     * 导出ad_plan表中的有效数据
+     *
+     * @param fileName 文件名称
+     */
     private void dumpAdPlanTable(String fileName) {
+        // 取出ad_plan表中的所有记录
         List<AdPlan> adPlanList = adPlanRepository.findAllByPlanStatus(CommonStatusEnum.VALID.getStatus());
         if (CollectionUtils.isEmpty(adPlanList)) {
             return;
         }
         log.info("adPlanList.size: [{}]", adPlanList.size());
 
+
+        // 只需要处理几个字段就行，无用字段不用导出到文件中
         List<AdPlanTable> adPlanTableList = new ArrayList<>();
         adPlanList.forEach(adPlan -> adPlanTableList.add(new AdPlanTable(adPlan.getId(),
-                adPlan.getUserId(), adPlan.getPlanStatus(), adPlan.getStartDate(), adPlan.getEndDate())));
+                adPlan.getUserId(),
+                adPlan.getPlanStatus(),
+                adPlan.getStartDate(),
+                adPlan.getEndDate())));
 
+        // 获取文件路径对象
         Path path = Paths.get(fileName);
         log.info("path: [{}]", path);
 
+        // 向文件中写入数据
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
             for (AdPlanTable adPlanTable : adPlanTableList) {
                 bufferedWriter.write(JSON.toJSONString(adPlanTable));
+                bufferedWriter.newLine();
             }
         } catch (IOException e) {
             log.error("dumpAdPlanTable error", e);
         }
     }
 
+    /**
+     * 导出ad_unit表中的有效记录
+     *
+     * @param fileName 文件名称
+     */
     private void dumpAdUnitTable(String fileName) {
         List<AdUnit> adUnitList = adUnitRepository.findAllByUnitStatus(CommonStatusEnum.VALID.getStatus());
         if (CollectionUtils.isEmpty(adUnitList)) {
@@ -104,7 +130,9 @@ public class DumpDataService {
 
         List<AdUnitTable> adUnitTableList = new ArrayList<>();
         adUnitList.forEach(adUnit -> adUnitTableList.add(new AdUnitTable(adUnit.getId(),
-                adUnit.getUnitStatus(), adUnit.getPositionType(), adUnit.getPlanId())));
+                adUnit.getUnitStatus(),
+                adUnit.getPositionType(),
+                adUnit.getPlanId())));
 
         Path path = Paths.get(fileName);
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
@@ -117,6 +145,11 @@ public class DumpDataService {
         }
     }
 
+    /**
+     * 导出ad_creative表
+     *
+     * @param fileName 文件名称
+     */
     private void dumpAdCreativeTable(String fileName) {
         List<Creative> creativeList = adCreativeRepository.findAll();
         if (CollectionUtils.isEmpty(creativeList)) {
@@ -126,8 +159,13 @@ public class DumpDataService {
 
         List<AdCreativeTable> adCreativeTableList = new ArrayList<>();
         creativeList.forEach(creative -> adCreativeTableList.add(new AdCreativeTable(creative.getId(),
-                creative.getName(), creative.getType(), creative.getMaterialType(), creative.getHeight(),
-                creative.getWidth(), creative.getAuditStatus(), creative.getUrl())));
+                creative.getName(),
+                creative.getType(),
+                creative.getMaterialType(),
+                creative.getHeight(),
+                creative.getWidth(),
+                creative.getAuditStatus(),
+                creative.getUrl())));
 
         Path path = Paths.get(fileName);
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
@@ -140,6 +178,11 @@ public class DumpDataService {
         }
     }
 
+    /**
+     * 导出creative_unit表记录
+     *
+     * @param fileName 文件名称
+     */
     private void dumpAdCreativeUnitTable(String fileName) {
         List<AdCreativeUnit> adCreativeUnitList = adCreativeUnitRepository.findAll();
         if (CollectionUtils.isEmpty(adCreativeUnitList)) {
@@ -163,6 +206,11 @@ public class DumpDataService {
         }
     }
 
+    /**
+     * 导出ad_unit_district表数据
+     *
+     * @param fileName 文件名称
+     */
     private void dumpAdUnitDistrictTable(String fileName) {
         List<AdUnitDistrict> adUnitDistrictList = adUnitDistrictRepository.findAll();
         if (CollectionUtils.isEmpty(adUnitDistrictList)) {
@@ -172,7 +220,8 @@ public class DumpDataService {
 
         List<AdUnitDistrictTable> adUnitDistrictTableList = new ArrayList<>();
         adUnitDistrictList.forEach(adUnitDistrict -> adUnitDistrictTableList.add(new AdUnitDistrictTable(adUnitDistrict.getUnitId(),
-                adUnitDistrict.getProvince(), adUnitDistrict.getCity())));
+                adUnitDistrict.getProvince(),
+                adUnitDistrict.getCity())));
 
         Path path = Paths.get(fileName);
         try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
@@ -185,6 +234,11 @@ public class DumpDataService {
         }
     }
 
+    /**
+     * 导出ad_unit_it表数据
+     *
+     * @param fileName 文件名称
+     */
     private void dumpAdUnitItTable(String fileName) {
         List<AdUnitIt> adUnitItList = adUnitItRepository.findAll();
         if (CollectionUtils.isEmpty(adUnitItList)) {
@@ -207,6 +261,11 @@ public class DumpDataService {
         }
     }
 
+    /**
+     * 导出ad_unit_keyword表数据
+     *
+     * @param fileName 文件名称
+     */
     private void dumpAdUnitKeywordTable(String fileName) {
         List<AdUnitKeyword> adUnitKeywordList = adUnitKeywordRepository.findAll();
         if (CollectionUtils.isEmpty(adUnitKeywordList)) {
