@@ -27,6 +27,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://server1:8000/eureka/
+    enabled: false
 
 jasypt:
   encryptor:
