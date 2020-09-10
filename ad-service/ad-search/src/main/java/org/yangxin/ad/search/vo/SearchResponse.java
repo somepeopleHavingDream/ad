@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 检索响应
+ *
  * @author yangxin
  * 2020/08/20 09:12
  */
@@ -19,9 +21,15 @@ import java.util.Map;
 @AllArgsConstructor
 public class SearchResponse {
 
-    public Map<String, List<Creative>> adSlot2Ads = new HashMap<>();
+    /**
+     * 槽位->创意列表
+     */
+    public Map<String, List<Creative>> adsByAdSlot = new HashMap<>();
+//    public Map<String, List<Creative>> adSlot2Ads = new HashMap<>();
 
     /**
+     * 创意
+     *
      * @author yangxin
      * 2020/08/20 09:12
      */
@@ -30,11 +38,34 @@ public class SearchResponse {
     @AllArgsConstructor
     public static class Creative {
 
+        /**
+         * 广告Id
+         */
         private Long adId;
+
+        /**
+         * 广告url
+         */
         private String adUrl;
+
+        /**
+         * 宽
+         */
         private Integer width;
+
+        /**
+         * 高
+         */
         private Integer height;
+
+        /**
+         * 创意类型
+         */
         private Integer type;
+
+        /**
+         * 材料类型
+         */
         private Integer materialType;
 
         /**
@@ -48,6 +79,9 @@ public class SearchResponse {
         private List<String> clickMonitorUrl = Arrays.asList("www.imooc.com", "www.imooc.com");
     }
 
+    /**
+     * 将创意具体对象转换成创意
+     */
     public static Creative convert(CreativeObject object) {
         Creative creative = new Creative();
         creative.setAdId(object.getAdId());

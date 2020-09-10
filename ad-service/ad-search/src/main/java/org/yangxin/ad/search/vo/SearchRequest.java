@@ -15,6 +15,8 @@ import org.yangxin.ad.search.vo.media.Geo;
 import java.util.List;
 
 /**
+ * 对广告的搜索请求
+ *
  * @author yangxin
  * 2020/08/19 16:00
  */
@@ -49,11 +51,29 @@ public class SearchRequest {
     @AllArgsConstructor
     public static class RequestInfo {
 
+        /**
+         * 请求Id
+         */
         private String requestId;
 
+        /**
+         * 槽
+         */
         private List<AdSlot> adSlotList;
+
+        /**
+         * App
+         */
         private App app;
+
+        /**
+         * Geo
+         */
         private Geo geo;
+
+        /**
+         * 设备
+         */
         private Device device;
     }
 
@@ -68,10 +88,24 @@ public class SearchRequest {
     @AllArgsConstructor
     public static class FeatureInfo {
 
+        /**
+         * 关键词特征
+         */
         private KeywordFeature keywordFeature;
+
+        /**
+         * 地域特征
+         */
         private DistrictFeature districtFeature;
+
+        /**
+         * 标签特征
+         */
         private ITFeature itFeature;
 
+        /**
+         * 特征关系
+         */
         private FeatureRelationEnum relation = FeatureRelationEnum.AND;
     }
 }

@@ -55,6 +55,9 @@ public class CreativeObject {
      */
     private String adUrl;
 
+    /**
+     * 更新操作
+     */
     public void update(CreativeObject newObject) {
         if (newObject.getAdId() != null) {
             this.adId = newObject.getAdId();

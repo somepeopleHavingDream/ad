@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
+ * 广告槽
+ *
  * @author yangxin
  * 2020/08/19 16:05
  */
@@ -41,7 +43,7 @@ public class AdSlot {
     private List<Integer> type;
 
     /**
-     * 最低出价
+     * 最低出价(cpc：千人成本）
      */
     private Integer minCpm;
 }

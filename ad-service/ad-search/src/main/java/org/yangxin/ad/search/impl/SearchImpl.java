@@ -38,18 +38,23 @@ public class SearchImpl implements Search {
         // 请求的广告位信息
         List<AdSlot> adSlots = request.getRequestInfo().getAdSlotList();
 
-        // 三个Feature
+        // 三个Feature，三个特征
         SearchRequest.FeatureInfo featureInfo = request.getFeatureInfo();
+        // 关键字特征
         KeywordFeature keywordFeature = featureInfo.getKeywordFeature();
+        // 地域特征
         DistrictFeature districtFeature = featureInfo.getDistrictFeature();
+        // 兴趣标签特征
         ITFeature itFeature = featureInfo.getItFeature();
 
+        // 特征关系
         FeatureRelationEnum relation = featureInfo.getRelation();
 
         // 构造响应对象
         SearchResponse response = new SearchResponse();
-        Map<String, List<SearchResponse.Creative>> adSlot2Ads = response.getAdSlot2Ads();
+        Map<String, List<SearchResponse.Creative>> adsByAdSlot = response.getAdsByAdSlot();
 
+        // 遍历广告位集合，构建adsByAdSlot对象
         for (AdSlot adSlot : adSlots) {
             Set<Long> targetUnitIdSet;
 
@@ -77,7 +82,7 @@ public class SearchImpl implements Search {
 
             // 通过AdSlot实现对CreativeObject的过滤
             filterCreativeByAdSlot(creatives, adSlot.getWidth(), adSlot.getHeight(), adSlot.getType());
-            adSlot2Ads.put(adSlot.getAdSlotCode(), buildCreativeResponse(creatives));
+            adsByAdSlot.put(adSlot.getAdSlotCode(), buildCreativeResponse(creatives));
         }
 
         log.info("fetchAds: [{}]-[{}]", JSON.toJSONString(request), JSON.toJSON(response));

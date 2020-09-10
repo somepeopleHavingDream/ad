@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * App
+ *
  * @author yangxin
  * 2020/08/19 16:10
  */

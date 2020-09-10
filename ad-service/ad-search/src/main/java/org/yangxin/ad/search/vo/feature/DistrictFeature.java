@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
+ * 地域特征
+ *
  * @author yangxin
  * 2020/08/19 16:30
  */
@@ -15,9 +17,14 @@ import java.util.List;
 @AllArgsConstructor
 public class DistrictFeature {
 
+    /**
+     * 地域列表
+     */
     private List<ProvinceAndCity> districts;
 
     /**
+     * 省和城市
+     *
      * @author yangxin
      * 2020/08/19 16:31
      */
@@ -26,7 +33,14 @@ public class DistrictFeature {
     @AllArgsConstructor
     public static class ProvinceAndCity {
 
+        /**
+         * 省
+         */
         private String province;
+
+        /**
+         * 城市
+         */
         private String city;
     }
 }
