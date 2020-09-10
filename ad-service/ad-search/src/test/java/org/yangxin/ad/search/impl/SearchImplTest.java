@@ -1,5 +1,6 @@
 package org.yangxin.ad.search.impl;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,7 +37,29 @@ public class SearchImplTest {
 
         // 第一个测试条件
         searchRequest.setRequestInfo(new SearchRequest.RequestInfo("aaa",
-                Collections.singletonList(new AdSlot("ad-x", 1, 1080, 720, Arrays.asList(1, 2), 1000))));
+                Collections.singletonList(new AdSlot("ad-x", 1, 1080, 720, Arrays.asList(1, 2), 1000)),
+                buildExampleApp(),
+                buildExampleGeo(),
+                buildExampleDevice()));
+        searchRequest.setFeatureInfo(buildExampleFeatureInfo(Arrays.asList("宝马", "大众"),
+                Collections.singletonList(new DistrictFeature.ProvinceAndCity("安徽省", "合肥市")),
+                Arrays.asList("台球", "游泳"),
+                FeatureRelationEnum.OR));
+        System.out.println(JSON.toJSONString(searchRequest));
+        System.out.println(JSON.toJSONString(search.fetchAds(searchRequest)));
+
+        // 第二个测试条件
+        searchRequest.setRequestInfo(new SearchRequest.RequestInfo("aaa",
+                Collections.singletonList(new AdSlot("ad-y", 1, 1080, 720, Arrays.asList(1, 2), 1000)),
+                buildExampleApp(),
+                buildExampleGeo(),
+                buildExampleDevice()));
+        searchRequest.setFeatureInfo(buildExampleFeatureInfo(Arrays.asList("宝马", "大众", "标志"),
+                Collections.singletonList(new DistrictFeature.ProvinceAndCity("安徽省", "合肥市")),
+                Arrays.asList("台球", "游泳"),
+                FeatureRelationEnum.AND));
+        System.out.println(JSON.toJSONString(searchRequest));
+        System.out.println(JSON.toJSONString(search.fetchAds(searchRequest)));
     }
 
     private App buildExampleApp() {
