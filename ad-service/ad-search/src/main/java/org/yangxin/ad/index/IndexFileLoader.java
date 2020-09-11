@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * 索引文件加载器
+ *
  * @author yangxin
  * 2020/06/11 20:45
  */
@@ -24,8 +26,17 @@ import java.util.stream.Collectors;
 @DependsOn("dataTable")
 public class IndexFileLoader {
 
+    /**
+     * PostConstruct该注解被用来修饰一个非静态的void()方法。
+     * 被@PostConstruct修饰的方法会在服务器加载Servlet的时候运行，并且只会被服务器执行一次。
+     * PostConstruct在构造函数之后执行，init()方法之前执行。
+     *
+     * 在Spring框架中：
+     *  Construct（构造方法）-> @Autowired（依赖注入）-> @PostConstruct（注释的方法）
+     */
     @PostConstruct
     public void init() {
+        // 加载导出来的数据
         List<String> adPlanStringList = loadDumpData(String.format("%s%s", DumpConstant.DATA_ROOT_DIR,
                 DumpConstant.AD_PLAN));
         adPlanStringList.forEach(p -> AdLevelDataHandler.handleLevel2(JSON.parseObject(p, AdPlanTable.class),
@@ -65,6 +76,11 @@ public class IndexFileLoader {
                 OpType.ADD));
     }
 
+    /**
+     * 通过文件名，加载导出来的数据
+     *
+     * @param fileName 文件名
+     */
     private List<String> loadDumpData(String fileName) {
         try (BufferedReader bufferedReader = Files.newBufferedReader(Paths.get(fileName))) {
             return bufferedReader.lines().collect(Collectors.toList());

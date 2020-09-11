@@ -33,12 +33,17 @@ import java.util.Set;
 @Slf4j
 public class AdLevelDataHandler {
 
+    /**
+     * 处理层级2的索引，推广计划
+     */
     public static void handleLevel2(AdPlanTable adPlanTable, OpType opType) {
         AdPlanObject adPlanObject = new AdPlanObject(adPlanTable.getId(),
                 adPlanTable.getUserId(),
                 adPlanTable.getPlanStatus(),
                 adPlanTable.getStartDate(),
                 adPlanTable.getEndDate());
+
+        // 处理mysql二进制日志事件
         handleBinlogEvent(DataTable.of(AdPlanIndex.class), adPlanObject.getPlanId(), adPlanObject, opType);
     }
 
@@ -141,15 +146,21 @@ public class AdLevelDataHandler {
         handleBinlogEvent(DataTable.of(UnitKeywordIndex.class), adUnitKeywordTable.getKeyword(), value, opType);
     }
 
+    /**
+     * 处理二进制日志事件
+     */
     private static <K, V> void handleBinlogEvent(IndexAware<K, V> index, K key, V value, OpType opType) {
         switch (opType) {
             case ADD:
+                // 添加索引
                 index.add(key, value);
                 break;
             case UPDATE:
+                // 更新索引
                 index.update(key, value);
                 break;
             case DELETE:
+                // 删除索引
                 index.delete(key, value);
                 break;
             default:

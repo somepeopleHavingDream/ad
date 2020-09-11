@@ -17,42 +17,43 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class AdPlanIndex implements IndexAware<Long, AdPlanObject> {
 
-    private static final Map<Long, AdPlanObject> adPlanObjectMap;
+    private static final Map<Long, AdPlanObject> AD_PLAN_OBJECT_MAP;
+//    private static final Map<Long, AdPlanObject> adPlanObjectMap;
 
     static {
-        adPlanObjectMap = new ConcurrentHashMap<>();
+        AD_PLAN_OBJECT_MAP = new ConcurrentHashMap<>();
     }
 
     @Override
     public AdPlanObject get(Long key) {
-        return adPlanObjectMap.get(key);
+        return AD_PLAN_OBJECT_MAP.get(key);
     }
 
     @Override
     public void add(Long key, AdPlanObject value) {
-        log.info("before add: [{}]", adPlanObjectMap);
-        adPlanObjectMap.put(key, value);
-        log.info("after add: [{}]", adPlanObjectMap);
+        log.info("before add: [{}]", AD_PLAN_OBJECT_MAP);
+        AD_PLAN_OBJECT_MAP.put(key, value);
+        log.info("after add: [{}]", AD_PLAN_OBJECT_MAP);
     }
 
     @Override
     public void update(Long key, AdPlanObject value) {
-        log.info("before update: [{}]", adPlanObjectMap);
+        log.info("before update: [{}]", AD_PLAN_OBJECT_MAP);
 
-        AdPlanObject adPlanObject = adPlanObjectMap.get(key);
+        AdPlanObject adPlanObject = AD_PLAN_OBJECT_MAP.get(key);
         if (null == adPlanObject) {
-            adPlanObjectMap.put(key, value);
+            AD_PLAN_OBJECT_MAP.put(key, value);
         } else {
             adPlanObject.update(value);
         }
 
-        log.info("after update: [{}]", adPlanObjectMap);
+        log.info("after update: [{}]", AD_PLAN_OBJECT_MAP);
     }
 
     @Override
     public void delete(Long key, AdPlanObject value) {
-        log.info("before delete: [{}]", adPlanObjectMap);
-        adPlanObjectMap.remove(key);
-        log.info("after delete: [{}]", adPlanObjectMap);
+        log.info("before delete: [{}]", AD_PLAN_OBJECT_MAP);
+        AD_PLAN_OBJECT_MAP.remove(key);
+        log.info("after delete: [{}]", AD_PLAN_OBJECT_MAP);
     }
 }

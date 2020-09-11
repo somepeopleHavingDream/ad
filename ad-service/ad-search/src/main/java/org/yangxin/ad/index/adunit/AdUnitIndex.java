@@ -18,16 +18,22 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class AdUnitIndex implements IndexAware<Long, AdUnitObject> {
 
-    private static final Map<Long, AdUnitObject> adUnitObjectMap;
+    private static final Map<Long, AdUnitObject> AD_UNIT_OBJECT_MAP;
+//    private static final Map<Long, AdUnitObject> adUnitObjectMap;
 
     static {
-        adUnitObjectMap = new ConcurrentHashMap<>();
+        AD_UNIT_OBJECT_MAP = new ConcurrentHashMap<>();
     }
 
+    /**
+     * 匹配操作
+     *
+     * @param positionType 位置类型|流量类型
+     */
     public Set<Long> match(Integer positionType) {
         Set<Long> adUnitIds = new HashSet<>();
 
-        adUnitObjectMap.forEach((k, v) -> {
+        AD_UNIT_OBJECT_MAP.forEach((k, v) -> {
             if (AdUnitObject.isAdSlotTypeOK(positionType, v.getPositionType())) {
                 adUnitIds.add(k);
             }
@@ -56,34 +62,34 @@ public class AdUnitIndex implements IndexAware<Long, AdUnitObject> {
 
     @Override
     public AdUnitObject get(Long key) {
-        return adUnitObjectMap.get(key);
+        return AD_UNIT_OBJECT_MAP.get(key);
     }
 
     @Override
     public void add(Long key, AdUnitObject value) {
-        log.info("before add: [{}]", adUnitObjectMap);
-        adUnitObjectMap.put(key, value);
-        log.info("after add: [{}]", adUnitObjectMap);
+        log.info("before add: [{}]", AD_UNIT_OBJECT_MAP);
+        AD_UNIT_OBJECT_MAP.put(key, value);
+        log.info("after add: [{}]", AD_UNIT_OBJECT_MAP);
     }
 
     @Override
     public void update(Long key, AdUnitObject value) {
-        log.info("before update: [{}]", adUnitObjectMap);
+        log.info("before update: [{}]", AD_UNIT_OBJECT_MAP);
 
-        AdUnitObject adUnitObject = adUnitObjectMap.get(key);
+        AdUnitObject adUnitObject = AD_UNIT_OBJECT_MAP.get(key);
         if (adUnitObject == null) {
-            adUnitObjectMap.put(key, value);
+            AD_UNIT_OBJECT_MAP.put(key, value);
         } else {
             adUnitObject.update(value);
         }
 
-        log.info("after update: [{}]", adUnitObjectMap);
+        log.info("after update: [{}]", AD_UNIT_OBJECT_MAP);
     }
 
     @Override
     public void delete(Long key, AdUnitObject value) {
-        log.info("before delete: [{}]", adUnitObjectMap);
-        adUnitObjectMap.remove(key);
-        log.info("after delete: [{}]", adUnitObjectMap);
+        log.info("before delete: [{}]", AD_UNIT_OBJECT_MAP);
+        AD_UNIT_OBJECT_MAP.remove(key);
+        log.info("after delete: [{}]", AD_UNIT_OBJECT_MAP);
     }
 }
