@@ -20,6 +20,7 @@ import org.yangxin.ad.service.AdUserService;
 @Slf4j
 @RestController
 public class AdUserOPController {
+
     private final AdUserService adUserService;
 
     @Autowired

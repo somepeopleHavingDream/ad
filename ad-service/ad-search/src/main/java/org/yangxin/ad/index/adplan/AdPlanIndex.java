@@ -17,8 +17,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class AdPlanIndex implements IndexAware<Long, AdPlanObject> {
 
+    /**
+     * 
+     */
     private static final Map<Long, AdPlanObject> AD_PLAN_OBJECT_MAP;
-//    private static final Map<Long, AdPlanObject> adPlanObjectMap;
 
     static {
         AD_PLAN_OBJECT_MAP = new ConcurrentHashMap<>();
