@@ -8,7 +8,7 @@ import org.yangxin.ad.vo.CommonResponseVO;
 import java.util.List;
 
 /**
- * 广告赞助商
+ * 对广告赞助商服务出现异常情况时的断路处理
  *
  * @author yangxin
  * 2020/04/09 20:47

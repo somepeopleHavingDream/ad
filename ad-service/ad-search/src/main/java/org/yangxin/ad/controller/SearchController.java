@@ -28,40 +28,20 @@ import java.util.List;
 @RestController
 public class SearchController {
 
-//    private final RestTemplate restTemplate;
-
     private final SponsorClient sponsorClient;
     private final Search search;
 
     @Autowired
-//    public SearchController(SponsorClient sponsorClient) {
     public SearchController(@Qualifier("sponsorClientHystrix") SponsorClient sponsorClient, Search search) {
-//    public SearchController(RestTemplate restTemplate, @Qualifier("sponsorClientHystrix") SponsorClient sponsorClient) {
-//        this.restTemplate = restTemplate;
         this.sponsorClient = sponsorClient;
         this.search = search;
     }
-
-//    /**
-//     * 通过ribbon获取广告投放计划
-//     */
-//    @IgnoreResponseAdvice
-//    @PostMapping("/adPlan/listByRibbon")
-//    @SuppressWarnings("all")
-//    public CommonResponseVO<List<AdPlanResponse>> listAdPlansByRibbon(@RequestBody AdPlanRequest request) {
-//        log.info("ad-search request: [{}]", JSON.toJSONString(request));
-//        return restTemplate.postForEntity("http://eureka-client-ad-sponsor/ad-sponsor/adPlan/list",
-//                request,
-//                CommonResponseVO.class)
-//                .getBody();
-//    }
 
     /**
      * 通过feign获取广告投放计划
      */
     @IgnoreResponseAdvice
     @PostMapping("/adPlan/list")
-//    @PostMapping(value = "/adPlan/list", produces = "application/json;charset=UTF-8")
     public CommonResponseVO<List<AdPlanResponse>> listAdPlans(@RequestBody AdPlanRequest request) {
         log.info("ad-search request: [{}]", JSON.toJSONString(request));
 
