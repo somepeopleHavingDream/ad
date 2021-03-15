@@ -17,7 +17,7 @@ public class CommonUtils {
     /**
      * 解析格式
      */
-    private static final String[] parsePatterns = {
+    private static final String[] PARSE_PATTERNS = {
             "yyyy-MM-dd", "yyyy/MM/dd", "yyyy.MM.dd"
     };
 
@@ -33,7 +33,7 @@ public class CommonUtils {
      */
     public static Date parseStringDate(String dateString) throws AdException {
         try {
-            return DateUtils.parseDate(dateString, parsePatterns);
+            return DateUtils.parseDate(dateString, PARSE_PATTERNS);
         } catch (ParseException e) {
             throw new AdException(e.getMessage());
         }

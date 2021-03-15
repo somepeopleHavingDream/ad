@@ -20,11 +20,12 @@ import org.yangxin.ad.service.AdUnitService;
  */
 @Slf4j
 @RestController
-public class AdUnitOPController {
+public class AdUnitOpController {
+
     private final AdUnitService adUnitService;
 
     @Autowired
-    public AdUnitOPController(AdUnitService adUnitService) {
+    public AdUnitOpController(AdUnitService adUnitService) {
         this.adUnitService = adUnitService;
     }
 

@@ -19,12 +19,12 @@ import org.yangxin.ad.service.AdUserService;
  */
 @Slf4j
 @RestController
-public class AdUserOPController {
+public class AdUserOpController {
 
     private final AdUserService adUserService;
 
     @Autowired
-    public AdUserOPController(AdUserService adUserService) {
+    public AdUserOpController(AdUserService adUserService) {
         this.adUserService = adUserService;
     }
 

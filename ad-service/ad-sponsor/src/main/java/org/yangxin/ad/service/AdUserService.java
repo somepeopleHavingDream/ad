@@ -11,8 +11,13 @@ import org.yangxin.ad.response.AdUserResponse;
  * 2020/01/08 15:51
  */
 public interface AdUserService {
+
     /**
      * 创建用户
+     *
+     * @param request 请求
+     * @return 响应
+     * @throws AdException 业务异常
      */
     AdUserResponse createUser(AdUserRequest request) throws AdException;
 }

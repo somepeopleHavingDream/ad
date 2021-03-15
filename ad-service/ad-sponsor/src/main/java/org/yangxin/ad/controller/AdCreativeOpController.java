@@ -18,11 +18,12 @@ import org.yangxin.ad.service.AdCreativeService;
  */
 @Slf4j
 @RestController
-public class AdCreativeOPController {
+public class AdCreativeOpController {
+
     private final AdCreativeService adCreativeService;
 
     @Autowired
-    public AdCreativeOPController(AdCreativeService adCreativeService) {
+    public AdCreativeOpController(AdCreativeService adCreativeService) {
         this.adCreativeService = adCreativeService;
     }
 

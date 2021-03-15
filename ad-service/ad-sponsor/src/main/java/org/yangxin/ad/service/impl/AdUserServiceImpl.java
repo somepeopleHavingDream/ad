@@ -29,7 +29,7 @@ public class AdUserServiceImpl implements AdUserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public AdUserResponse createUser(AdUserRequest request) throws AdException {
         // 校验
         if (!request.validate()) {

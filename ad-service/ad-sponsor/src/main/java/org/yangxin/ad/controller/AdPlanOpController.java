@@ -19,12 +19,12 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-public class AdPlanOPController {
+public class AdPlanOpController {
 
     private final AdPlanService adPlanService;
 
     @Autowired
-    public AdPlanOPController(AdPlanService adPlanService) {
+    public AdPlanOpController(AdPlanService adPlanService) {
         this.adPlanService = adPlanService;
     }
 
@@ -41,7 +41,6 @@ public class AdPlanOPController {
      * 根据Ids获取推广计划
      */
     @PostMapping(value = "/adPlan/list")
-//    @PostMapping(value = "/adPlan/list", produces = "application/json;charset=UTF-8")
     public List<AdPlan> listAdPlanByIds(@RequestBody AdPlanRequest request) throws AdException {
         log.info("ad-sponsor request: [{}]", request);
 
