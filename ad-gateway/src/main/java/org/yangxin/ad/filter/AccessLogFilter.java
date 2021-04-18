@@ -24,7 +24,7 @@ public class AccessLogFilter extends ZuulFilter {
 
     @Override
     public String filterType() {
-        // 过滤器的类型
+        // 过滤器的类型（后置过滤器）
         return FilterConstants.POST_TYPE;
     }
 
@@ -47,9 +47,11 @@ public class AccessLogFilter extends ZuulFilter {
         Long startTime = (Long) requestContext.get("startTime");
 
         HttpServletRequest request = requestContext.getRequest();
-        String requestURI = request.getRequestURI();
+        String requestUri = request.getRequestURI();
 
-        log.info("uri: [{}], duration: [{}]ms", requestURI, System.currentTimeMillis() - startTime);
+        if (log.isInfoEnabled()) {
+            log.info("uri: [{}], duration: [{}]ms", requestUri, System.currentTimeMillis() - startTime);
+        }
 
         return null;
     }
