@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
  * @author yangxin
  * 2020/01/14 16:04
  */
+@SuppressWarnings("CommentedOutCode")
 @EnableFeignClients
 @EnableEurekaClient
 @EnableHystrix
