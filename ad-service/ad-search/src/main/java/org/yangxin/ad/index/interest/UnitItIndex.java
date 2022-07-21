@@ -18,6 +18,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
  * @author yangxin
  * 2020/05/23 12:24
  */
+@SuppressWarnings({"DuplicatedCode", "AlibabaConstantFieldShouldBeUpperCase"})
 @Slf4j
 @Component
 public class UnitItIndex implements IndexAware<String, Set<Long>> {
